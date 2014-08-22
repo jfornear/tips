@@ -16,17 +16,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var tipControl: UISegmentedControl!
     @IBOutlet weak var fieldContainer: UIView!
     
-    var expandedContainer = true
-
-    
+    var showTipControl = false
+                                                                                            
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         tipLabel.text = "$0.00"
         totalLabel.text = "$0.00"
-    
-        self.fieldContainer.frame.size.height += 120
-        self.fieldContainer.center.y += 60
         self.tipControl.alpha = 0
     }
 
@@ -51,22 +47,17 @@ class ViewController: UIViewController {
         tipLabel.text = String(format: "$%.2f", tip)
         totalLabel.text = String(format: "$%.2f", total)
         
+        // Show/hide tipControl
         if billField.text == "" {
-            UIView.animateWithDuration(0.3, animations: {
-                // This expands and animates the fieldContainer
-                self.fieldContainer.frame.size.height += 120
-                self.fieldContainer.center.y += 60
+            UIView.animateWithDuration(0.2, animations: {
                 self.tipControl.alpha = 0
-                self.expandedContainer = true
+                self.showTipControl = false
             })
         } else {
-            if self.expandedContainer == true {
-                UIView.animateWithDuration(0.3, animations: {
-                    // This contracts and animates the fieldContainer
-                    self.fieldContainer.frame.size.height = 215
-                    self.fieldContainer.center.y -= 60
+            if self.showTipControl == false {
+                UIView.animateWithDuration(0.2, animations: {
                     self.tipControl.alpha = 1
-                    self.expandedContainer = false
+                    self.showTipControl = true
                 })
             }
         }
